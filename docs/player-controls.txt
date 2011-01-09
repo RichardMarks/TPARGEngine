@@ -1,0 +1,11 @@
+the control setup for the player is as follows:
+
+WSAD & ARROWS to move up, down, left, and right respectively.
+SPACE to jump in the direction the player faces - 
+jumping cannot be controlled in mid-air. 
+player should jump to the tile after the adjacent tile (so skipping the adjacent tile and landing on the following tile)
+X key will fire the weapon in the direction the player faces
+if the player comes in contact with a ladder tile, 
+pressing the C key should allow the player to climb: 
+up keys should move up the ladder, and down keys should move down the ladder.
+

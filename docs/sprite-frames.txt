@@ -1,0 +1,55 @@
+player-spritesheet.png
+Each frame is 8x8 pixels in size.
+There are a total of 39 frames of animation
+
+labeling each frame from left to right as 0-B in hex notation
+and labeling each frame from top to bottom as 0-2 the frames are as follows
+
+frame listing is ordered from left to right
+top to bottom
+
+XY - description
+------------------------------
+00 - north/south idle
+10 - north/south walk 1
+20 - north/south walk 2
+30 - north idle with gun
+40 - north walk 1 with gun
+50 - north walk 2 with gun
+60 - north/south jump
+70 - north/south land
+80 - north/south climb 1
+90 - north/south climb 2
+A0 - north south death 1
+B0 - north/south death 2
+
+31 - south idle with gun
+41 - south walk 1 with gun
+51 - south walk 2 with gun
+
+02 - east idle
+12 - east walk 1
+22 - east walk 2
+32 - east idle with gun
+42 - east walk 1 with gun
+52 - east walk 2 with gun
+62 - east jump
+72 - east land
+82 - east climb 1
+92 - east climb 2
+A2 - east death 1
+B2 - east death 2
+
+03 - west idle
+13 - west walk 1
+23 - west walk 2
+33 - west idle with gun
+43 - west walk 1 with gun
+53 - west walk 2 with gun
+63 - west jump
+73 - west land
+83 - west climb 1
+93 - west climb 2
+A3 - west death 1
+B3 - west death 2
+

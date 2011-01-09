@@ -1,0 +1,35 @@
+This project is using a modified FlashPunk version.
+
+Available here:
+
+https://github.com/RichardMarks/FlashPunk1.4mod
+
+
+Coding conventions:
+
+classes and functions are always CapitalizedLikeThis
+
+variables (member and local) are namedLikeThis
+
+code blocks are always used even in cases where braces can be omitted by the language
+such as one-liner if statements:
+	if (condition) DoSomething(); 
+should be written as
+	if (condition) { DoSomething(); }
+
+static functions and variables should be marked with the static keyword before the scope specification.
+for example
+static public const TILE_WIDTH:Number = 32;
+static public function Negate(a:*) { a = -a; }
+
+property setter functions should always use "value" as the sole parameter
+for example
+public function set Size(value:Number):void { mySize = value; }
+
+private member variables should have the prefix "my" to designate the ownership of the class instance
+such as
+
+private var myImage:Image;
+
+Try to avoid nested code blocks as much as possible.
+
