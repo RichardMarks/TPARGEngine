@@ -16,8 +16,8 @@ package game
 		
 		private var mySpritemap:Spritemap;
 		
-		static private const FRAME_WIDTH:int = 8;
-		static private const FRAME_HEIGHT:int = 8;
+		static private const FRAME_WIDTH:int = 32;
+		static private const FRAME_HEIGHT:int = 32;
 		
 		private var myLastDirection:String = "north";
 		
@@ -33,14 +33,15 @@ package game
 			super.added();
 			
 			// set position to somewhere towards the middle of the screen
-			x = FP.width / 2 - FRAME_WIDTH / 2;
-			y = FP.height / 2 - FRAME_HEIGHT / 2;
+			x = 320;
+			y = 320;
 			targetX = x;
 			targetY = y;
 			
 			mySpritemap = new Spritemap(PLAYER_SPRITE_SHEET, FRAME_WIDTH, FRAME_HEIGHT);
 			
 			graphic = mySpritemap;
+			layer = 1;
 			
 			// set the animations on the sprite sheet
 			mySpritemap.add("north idle", [0]);
@@ -90,7 +91,7 @@ package game
 		}
 		
 		private var isMoving:Boolean = false;
-		private const SPEED:Number = 20;
+		private const SPEED:Number = 64;
 		private var isJumping:Boolean = false;
 		private var isClimbing:Boolean = false;
 		private var timeForMove:Number = .1;

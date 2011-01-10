@@ -23,7 +23,7 @@ package
 		private var noFocusText:Text;
 		
 		static public var hasFocus:Boolean = true;
-		public function Main() { super(400, 300); }
+		public function Main() { super(800, 600); }
 		override public function init():void 
 		{
 			stage.addEventListener(Event.DEACTIVATE, OnLostFocus);
@@ -37,7 +37,7 @@ package
 			noFocusText.x = int((noFocusBg.width - noFocusText.width) * 0.5);
 			noFocusText.y = int((noFocusBg.height - noFocusText.height) * 0.5);
 			
-			FP.screen.scale = 2;
+			FP.screen.scale = 1;
 			
 			FP.console.enable();
 			
