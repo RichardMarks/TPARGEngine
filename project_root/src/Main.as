@@ -52,8 +52,8 @@ package
 		{
 			if (!hasFocus) 
 			{
-				noFocusBg.render(new Point, FP.camera);
-				noFocusText.render(new Point, FP.camera);
+				noFocusBg.render(new Point, new Point);
+				noFocusText.render(new Point, new Point);
 				return; 
 			}
 			

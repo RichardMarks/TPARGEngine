@@ -116,14 +116,22 @@ package game
 			if (!isMoving) {
 				if (Input.pressed("climb"))
 				{
-					isClimbing = !isClimbing;
-					if (isClimbing)
+					var entities:Array = new Array;
+					collideInto("ladder", x, y, entities);
+					for each (var ent:Entity in entities)
 					{
-						mySpritemap.play(myLastDirection + " climb idle");
-					}
-					else
-					{
-						mySpritemap.play(myLastDirection + " idle");
+						if (ent.layer == layer + 1)
+						{
+							isClimbing = !isClimbing;
+							if (isClimbing)
+							{
+								mySpritemap.play(myLastDirection + " climb idle");
+							}
+							else
+							{
+								mySpritemap.play(myLastDirection + " idle");
+							}
+						}
 					}
 				}
 				if (!isClimbing)
@@ -134,9 +142,9 @@ package game
 						{
 							if (timeSinceMove > timeForMove)
 							{
-								var entities:Array = new Array;
+								entities = new Array;
 								collideInto("floor", x, y - FRAME_HEIGHT, entities);
-								for each (var ent:Entity in entities)
+								for each (ent in entities)
 								{
 									if (ent.layer == layer + 1)
 									{
@@ -306,14 +314,14 @@ package game
 					if (Input.check("climb up"))
 					{
 						mySpritemap.play(myLastDirection + " climb");
-						targetY -= FRAME_HEIGHT;
+						targetY -= FRAME_HEIGHT * 2;
 						isMoving = true;
 						layer -= 2;
 					}
 					else if (Input.check("climb down"))
 					{
 						mySpritemap.play(myLastDirection + " climb");
-						targetY += FRAME_HEIGHT;
+						targetY += FRAME_HEIGHT * 2;
 						isMoving = true;
 						layer += 2;
 					}
@@ -357,7 +365,8 @@ package game
 					}
 					else if (isClimbing)
 					{
-						mySpritemap.play(myLastDirection + " climb idle");
+						mySpritemap.play(myLastDirection + " idle");
+						isClimbing = false;
 					}
 					else
 					{

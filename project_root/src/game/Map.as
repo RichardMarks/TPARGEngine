@@ -63,6 +63,10 @@ package game
 				FP.world.add(floor);
 			}
 			
+			FP.world.add(Ladders.load(xml, 0, TILESET));
+			FP.world.add(Ladders.load(xml, 1, TILESET));
+			FP.world.add(Ladders.load(xml, 2, TILESET));
+			
 			map.graphic = map.myWallMap;
 			map.layer = 11;
 			
