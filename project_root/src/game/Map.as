@@ -55,6 +55,8 @@ package game
 			}
 			
 			map.myFloors.push(Floor.load(xml, 0, TILESET));
+			map.myFloors.push(Floor.load(xml, 1, TILESET));
+			map.myFloors.push(Floor.load(xml, 2, TILESET));
 			
 			var floor:Floor;
 			for each (floor in map.myFloors) {

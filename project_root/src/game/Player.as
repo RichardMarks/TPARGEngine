@@ -41,7 +41,8 @@ package game
 			mySpritemap = new Spritemap(PLAYER_SPRITE_SHEET, FRAME_WIDTH, FRAME_HEIGHT);
 			
 			graphic = mySpritemap;
-			layer = 1;
+			layer = 9;
+			setHitbox(FRAME_WIDTH, FRAME_HEIGHT);
 			
 			// set the animations on the sprite sheet
 			mySpritemap.add("north idle", [0]);
@@ -100,6 +101,18 @@ package game
 		{
 			super.update();
 			timeSinceMove += FP.elapsed;
+			if (x - FP.camera.x > 496) {
+				FP.camera.x = x - 496;
+			}
+			else if (x - FP.camera.x < 304) {
+				FP.camera.x = x - 304;
+			}
+			if (y - FP.camera.y > 396) {
+				FP.camera.y = y - 396;
+			}
+			else if (y - FP.camera.y < 204) {
+				FP.camera.y = y - 204;
+			}
 			if (!isMoving) {
 				if (Input.pressed("climb"))
 				{
@@ -121,9 +134,17 @@ package game
 						{
 							if (timeSinceMove > timeForMove)
 							{
-								mySpritemap.play("north walk", false);
-								targetY -= FRAME_HEIGHT;
-								isMoving = true;
+								var entities:Array = new Array;
+								collideInto("floor", x, y - FRAME_HEIGHT, entities);
+								for each (var ent:Entity in entities)
+								{
+									if (ent.layer == layer + 1)
+									{
+										mySpritemap.play("north walk", false);
+										targetY -= FRAME_HEIGHT;
+										isMoving = true;
+									}
+								}
 							}
 						}
 						else
@@ -139,9 +160,17 @@ package game
 						{
 							if (timeSinceMove > timeForMove)
 							{
-								mySpritemap.play("south walk", false);
-								targetY += FRAME_HEIGHT;
-								isMoving = true;
+								entities = new Array;
+								collideInto("floor", x, y + FRAME_HEIGHT, entities);
+								for each (ent in entities)
+								{
+									if (ent.layer == layer + 1)
+									{
+										mySpritemap.play("south walk", false);
+										targetY += FRAME_HEIGHT;
+										isMoving = true;
+									}
+								}
 							}
 						}
 						else
@@ -157,9 +186,17 @@ package game
 						{
 							if (timeSinceMove > timeForMove)
 							{
-								mySpritemap.play("east walk", false);
-								targetX += FRAME_WIDTH;
-								isMoving = true;
+								entities = new Array;
+								collideInto("floor", x + FRAME_WIDTH, y, entities);
+								for each (ent in entities)
+								{
+									if (ent.layer == layer + 1)
+									{
+										mySpritemap.play("east walk", false);
+										targetX += FRAME_WIDTH;
+										isMoving = true;
+									}
+								}
 							}
 						}
 						else
@@ -175,9 +212,17 @@ package game
 						{
 							if (timeSinceMove > timeForMove)
 							{
-								mySpritemap.play("west walk", false);
-								targetX -= FRAME_WIDTH;
-								isMoving = true;
+								entities = new Array;
+								collideInto("floor", x - FRAME_WIDTH, y, entities);
+								for each (ent in entities)
+								{
+									if (ent.layer == layer + 1)
+									{
+										mySpritemap.play("west walk", false);
+										targetX -= FRAME_WIDTH;
+										isMoving = true;
+									}
+								}
 							}
 						}
 						else
@@ -222,12 +267,14 @@ package game
 						mySpritemap.play(myLastDirection + " climb");
 						targetY -= FRAME_HEIGHT;
 						isMoving = true;
+						layer -= 2;
 					}
 					else if (Input.check("climb down"))
 					{
 						mySpritemap.play(myLastDirection + " climb");
 						targetY += FRAME_HEIGHT;
 						isMoving = true;
+						layer += 2;
 					}
 				}
 			}
