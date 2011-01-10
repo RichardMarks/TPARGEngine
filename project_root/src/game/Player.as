@@ -234,24 +234,65 @@ package game
 					}
 					else if (Input.pressed("jump"))
 					{
-						isMoving = true;
-						isJumping = true;
-						mySpritemap.play(myLastDirection + " jump")
 						if (myLastDirection == "north")
 						{
-							targetY -= FRAME_HEIGHT * 2;
+							entities = new Array;
+								collideInto("floor", x, y - FRAME_HEIGHT * 2, entities);
+								for each (ent in entities)
+								{
+									if (ent.layer == layer + 1)
+									{
+										targetY -= FRAME_HEIGHT * 2;
+										isMoving = true;
+										isJumping = true;
+										mySpritemap.play(myLastDirection + " jump");
+									}
+								}
 						}
 						else if (myLastDirection == "south")
 						{
-							targetY += FRAME_HEIGHT * 2;
+							entities = new Array;
+								collideInto("floor", x, y + FRAME_HEIGHT * 2, entities);
+								for each (ent in entities)
+								{
+									if (ent.layer == layer + 1)
+									{
+										targetY += FRAME_HEIGHT * 2;
+										isMoving = true;
+										isJumping = true;
+										mySpritemap.play(myLastDirection + " jump");
+									}
+								}
 						}
 						else if (myLastDirection == "east")
 						{
-							targetX += FRAME_WIDTH * 2;
+							entities = new Array;
+								collideInto("floor", x + FRAME_WIDTH * 2, y, entities);
+								for each (ent in entities)
+								{
+									if (ent.layer == layer + 1)
+									{
+										targetX += FRAME_WIDTH * 2;
+										isMoving = true;
+										isJumping = true;
+										mySpritemap.play(myLastDirection + " jump");
+									}
+								}
 						}
 						else
 						{
-							targetX -= FRAME_WIDTH * 2;
+							entities = new Array;
+							collideInto("floor", x - FRAME_WIDTH * 2, y, entities);
+							for each (ent in entities)
+							{
+								if (ent.layer == layer + 1)
+								{
+									targetX -= FRAME_WIDTH * 2;
+									isMoving = true;
+									isJumping = true;
+									mySpritemap.play(myLastDirection + " jump");
+								}
+							}
 						}
 					}
 					// temporary to check death animation
