@@ -245,47 +245,47 @@ package game
 						if (myLastDirection == "north")
 						{
 							entities = new Array;
-								collideInto("floor", x, y - FRAME_HEIGHT * 2, entities);
-								for each (ent in entities)
+							collideInto("floor", x, y - FRAME_HEIGHT * 2, entities);
+							for each (ent in entities)
+							{
+								if (ent.layer == layer + 1)
 								{
-									if (ent.layer == layer + 1)
-									{
-										targetY -= FRAME_HEIGHT * 2;
-										isMoving = true;
-										isJumping = true;
-										mySpritemap.play(myLastDirection + " jump");
-									}
+									targetY -= FRAME_HEIGHT * 2;
+									isMoving = true;
+									isJumping = true;
+									mySpritemap.play(myLastDirection + " jump");
 								}
+							}
 						}
 						else if (myLastDirection == "south")
 						{
 							entities = new Array;
-								collideInto("floor", x, y + FRAME_HEIGHT * 2, entities);
-								for each (ent in entities)
+							collideInto("floor", x, y + FRAME_HEIGHT * 2, entities);
+							for each (ent in entities)
+							{
+								if (ent.layer == layer + 1)
 								{
-									if (ent.layer == layer + 1)
-									{
-										targetY += FRAME_HEIGHT * 2;
-										isMoving = true;
-										isJumping = true;
-										mySpritemap.play(myLastDirection + " jump");
-									}
+									targetY += FRAME_HEIGHT * 2;
+									isMoving = true;
+									isJumping = true;
+									mySpritemap.play(myLastDirection + " jump");
 								}
+							}
 						}
 						else if (myLastDirection == "east")
 						{
 							entities = new Array;
-								collideInto("floor", x + FRAME_WIDTH * 2, y, entities);
-								for each (ent in entities)
+							collideInto("floor", x + FRAME_WIDTH * 2, y, entities);
+							for each (ent in entities)
+							{
+								if (ent.layer == layer + 1)
 								{
-									if (ent.layer == layer + 1)
-									{
-										targetX += FRAME_WIDTH * 2;
-										isMoving = true;
-										isJumping = true;
-										mySpritemap.play(myLastDirection + " jump");
-									}
+									targetX += FRAME_WIDTH * 2;
+									isMoving = true;
+									isJumping = true;
+									mySpritemap.play(myLastDirection + " jump");
 								}
+							}
 						}
 						else
 						{
@@ -313,17 +313,33 @@ package game
 				{
 					if (Input.check("climb up"))
 					{
-						mySpritemap.play(myLastDirection + " climb");
-						targetY -= FRAME_HEIGHT * 2;
-						isMoving = true;
-						layer -= 2;
+						entities = new Array;
+						collideInto("ladder", x, y - FRAME_HEIGHT * 2, entities);
+						for each (ent in entities)
+						{
+							if (ent.layer == layer - 1)
+							{
+								mySpritemap.play(myLastDirection + " climb");
+								targetY -= FRAME_HEIGHT * 2;
+								isMoving = true;
+								layer -= 2;
+							}
+						}
 					}
 					else if (Input.check("climb down"))
 					{
-						mySpritemap.play(myLastDirection + " climb");
-						targetY += FRAME_HEIGHT * 2;
-						isMoving = true;
-						layer += 2;
+						entities = new Array;
+						collideInto("ladder", x, y + FRAME_HEIGHT * 2, entities);
+						for each (ent in entities)
+						{
+							if (ent.layer == layer + 3)
+							{
+								mySpritemap.play(myLastDirection + " climb");
+								targetY += FRAME_HEIGHT * 2;
+								isMoving = true;
+								layer += 2;
+							}
+						}
 					}
 				}
 			}
