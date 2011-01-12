@@ -27,6 +27,7 @@ package game
 		
 		private var targetX:Number;
 		private var targetY:Number;
+		private var targetLayer:int;
 		
 		override public function added():void 
 		{
@@ -97,6 +98,8 @@ package game
 		private var isClimbing:Boolean = false;
 		private var timeForMove:Number = .1;
 		private var timeSinceMove:Number = .1;
+		private var entities:Array = new Array;
+		private var move:Boolean = true;
 		override public function update():void 
 		{
 			super.update();
@@ -116,7 +119,7 @@ package game
 			if (!isMoving) {
 				if (Input.pressed("climb"))
 				{
-					var entities:Array = new Array;
+					entities.length = 0;
 					collideInto("ladder", x, y, entities);
 					for each (var ent:Entity in entities)
 					{
@@ -142,7 +145,7 @@ package game
 						{
 							if (timeSinceMove > timeForMove)
 							{
-								entities = new Array;
+								entities.length = 0;
 								collideInto("floor", x, y - FRAME_HEIGHT, entities);
 								for each (ent in entities)
 								{
@@ -168,7 +171,7 @@ package game
 						{
 							if (timeSinceMove > timeForMove)
 							{
-								entities = new Array;
+								entities.length = 0;
 								collideInto("floor", x, y + FRAME_HEIGHT, entities);
 								for each (ent in entities)
 								{
@@ -194,15 +197,27 @@ package game
 						{
 							if (timeSinceMove > timeForMove)
 							{
-								entities = new Array;
+								entities.length = 0;
 								collideInto("floor", x + FRAME_WIDTH, y, entities);
 								for each (ent in entities)
 								{
 									if (ent.layer == layer + 1)
 									{
-										mySpritemap.play("east walk", false);
-										targetX += FRAME_WIDTH;
-										isMoving = true;
+										entities.length = 0;
+										collideInto("ladder", x + FRAME_WIDTH, y, entities);
+										move = true;
+										for each (ent in entities)
+										{
+											if (ent.layer == layer + 1)
+											{
+												move = false;
+											}
+										}
+										if (move) {
+											mySpritemap.play("east walk", false);
+											targetX += FRAME_WIDTH;
+											isMoving = true;
+										}
 									}
 								}
 							}
@@ -220,15 +235,27 @@ package game
 						{
 							if (timeSinceMove > timeForMove)
 							{
-								entities = new Array;
+								entities.length = 0;
 								collideInto("floor", x - FRAME_WIDTH, y, entities);
 								for each (ent in entities)
 								{
 									if (ent.layer == layer + 1)
 									{
-										mySpritemap.play("west walk", false);
-										targetX -= FRAME_WIDTH;
-										isMoving = true;
+										entities.length = 0;
+										collideInto("ladder", x - FRAME_WIDTH, y, entities);
+										move = true;
+										for each (ent in entities)
+										{
+											if (ent.layer == layer + 1)
+											{
+												move = false;
+											}
+										}
+										if (move) {
+											mySpritemap.play("west walk", false);
+											targetX -= FRAME_WIDTH;
+											isMoving = true;
+										}
 									}
 								}
 							}
@@ -244,7 +271,7 @@ package game
 					{
 						if (myLastDirection == "north")
 						{
-							entities = new Array;
+							entities.length = 0;
 							collideInto("floor", x, y - FRAME_HEIGHT * 2, entities);
 							for each (ent in entities)
 							{
@@ -259,7 +286,7 @@ package game
 						}
 						else if (myLastDirection == "south")
 						{
-							entities = new Array;
+							entities.length = 0;
 							collideInto("floor", x, y + FRAME_HEIGHT * 2, entities);
 							for each (ent in entities)
 							{
@@ -274,7 +301,7 @@ package game
 						}
 						else if (myLastDirection == "east")
 						{
-							entities = new Array;
+							entities.length = 0;
 							collideInto("floor", x + FRAME_WIDTH * 2, y, entities);
 							for each (ent in entities)
 							{
@@ -289,7 +316,7 @@ package game
 						}
 						else
 						{
-							entities = new Array;
+							entities.length = 0;
 							collideInto("floor", x - FRAME_WIDTH * 2, y, entities);
 							for each (ent in entities)
 							{
@@ -313,8 +340,8 @@ package game
 				{
 					if (Input.check("climb up"))
 					{
-						entities = new Array;
-						collideInto("ladder", x, y - FRAME_HEIGHT * 2, entities);
+						entities.length = 0;
+						collideInto("ladder", x, y - FRAME_HEIGHT, entities);
 						for each (ent in entities)
 						{
 							if (ent.layer == layer - 1)
@@ -323,12 +350,13 @@ package game
 								targetY -= FRAME_HEIGHT * 2;
 								isMoving = true;
 								layer -= 2;
+								targetLayer = layer;
 							}
 						}
 					}
 					else if (Input.check("climb down"))
 					{
-						entities = new Array;
+						entities.length = 0;
 						collideInto("ladder", x, y + FRAME_HEIGHT * 2, entities);
 						for each (ent in entities)
 						{
@@ -337,7 +365,7 @@ package game
 								mySpritemap.play(myLastDirection + " climb");
 								targetY += FRAME_HEIGHT * 2;
 								isMoving = true;
-								layer += 2;
+								targetLayer = layer + 2;
 							}
 						}
 					}
@@ -383,6 +411,7 @@ package game
 					{
 						mySpritemap.play(myLastDirection + " idle");
 						isClimbing = false;
+						layer = targetLayer;
 					}
 					else
 					{
