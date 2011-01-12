@@ -151,9 +151,30 @@ package game
 								{
 									if (ent.layer == layer + 1)
 									{
-										mySpritemap.play("north walk", false);
-										targetY -= FRAME_HEIGHT;
-										isMoving = true;
+										move = true;
+										entities.length = 0;
+										collideInto("ladder", x, y, entities);
+										for each (ent in entities)
+										{
+											if (ent.layer == layer + 1)
+											{
+												entities.length = 0;
+												collideInto("ladder", x, y - FRAME_HEIGHT, entities);
+												for each (ent in entities)
+												{
+													if (ent.layer == layer - 1)
+													{
+														move = false;
+													}
+												}
+											}
+										}
+										if (move)
+										{
+											mySpritemap.play("north walk", false);
+											targetY -= FRAME_HEIGHT;
+											isMoving = true;
+										}
 									}
 								}
 							}
@@ -177,9 +198,31 @@ package game
 								{
 									if (ent.layer == layer + 1)
 									{
-										mySpritemap.play("south walk", false);
-										targetY += FRAME_HEIGHT;
-										isMoving = true;
+										move = true;
+										entities.length = 0;
+										collideInto("ladder", x, y + FRAME_HEIGHT, entities);
+										for each (ent in entities)
+										{
+											if (ent.layer == layer + 1)
+											{
+												move = false;
+												entities.length = 0;
+												collideInto("ladder", x, y + FRAME_HEIGHT * 2, entities);
+												for each (ent in entities)
+												{
+													if (ent.layer == layer + 1)
+													{
+														move = true;
+													}
+												}
+											}
+										}
+										if (move)
+										{
+											mySpritemap.play("south walk", false);
+											targetY += FRAME_HEIGHT;
+											isMoving = true;
+										}
 									}
 								}
 							}
