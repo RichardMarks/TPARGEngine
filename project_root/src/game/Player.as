@@ -23,7 +23,12 @@ package game
 		
 		public var hasGun:Boolean;
 		
-		public function Player() { }
+		public function Player(xPos:int, yPos:int, startLayer:int) 
+		{
+			x = xPos;
+			y = yPos;
+			layer = startLayer;
+		}
 		
 		private var targetX:Number;
 		private var targetY:Number;
@@ -34,8 +39,6 @@ package game
 			super.added();
 			
 			// set position to somewhere towards the middle of the screen
-			x = 320;
-			y = 320;
 			targetX = x;
 			targetY = y;
 			

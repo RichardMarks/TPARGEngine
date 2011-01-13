@@ -15,7 +15,6 @@ package game
 		override public function begin():void 
 		{
 			super.begin();
-			add(new Player);
 			add(Map.loadMap(TEST_MAP));
 		}
 	}
