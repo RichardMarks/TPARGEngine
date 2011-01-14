@@ -97,8 +97,12 @@ package game
 							else if (property.@name == "destinationFloor") {
 								var targetLayer:int = 9 - (property.@value - 1) * 3;
 							}
+							else if (property.@name == "accessLevel") {
+								var accessLevel:int = property.@value;
+							}
 						}
 						var tele:Teleport = new Teleport(xPos, yPos, targetMap, targetX, targetY, targetLayer, 8 - i * 3, player);
+						tele.accessLevel = accessLevel;
 						FP.world.add(tele);
 						if (playerX > 0) {
 							tele.open(false);

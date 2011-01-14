@@ -200,12 +200,18 @@ package game
 											var tele:Teleport = collide("teleport", x, y - 32) as Teleport;
 											if (tele && tele.layer == layer - 1)
 											{
-												
-												tele.open();
+												if (myKeyCards >= tele.accessLevel) {
+													tele.open();
+												}
+												else {
+													move = false;
+												}
 											}
-											mySpritemap.play("north walk", false);
-											targetY -= FRAME_HEIGHT;
-											isMoving = true;
+											if (move) {
+												mySpritemap.play("north walk", false);
+												targetY -= FRAME_HEIGHT;
+												isMoving = true;
+											}
 										}
 									}
 								}

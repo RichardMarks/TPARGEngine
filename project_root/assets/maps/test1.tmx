@@ -4072,6 +4072,7 @@
  <objectgroup name="objects-f2" width="25" height="23">
   <object name="Warp" type="map_change" x="396" y="173">
    <properties>
+    <property name="accessLevel" value="1"/>
     <property name="destinationFloor" value="1"/>
     <property name="destinationMap" value="test2"/>
     <property name="destinationX" value="6"/>
