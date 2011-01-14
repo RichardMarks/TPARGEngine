@@ -1,0 +1,6 @@
+Game Objectives
+
+1 - collect data disks throughout the complex as they contain confidential information regarding the operations of the complex
+2 - annihilate all hostiles in the complex (these will be mutant beasts of varying difficulty)
+3 - place explosives at specific locations in the complex
+4 - trigger the explosive timer and escape the complex before it blows
