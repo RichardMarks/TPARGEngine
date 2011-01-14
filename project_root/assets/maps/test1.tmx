@@ -5825,5 +5825,6 @@
     <property name="destinationY" value="8"/>
    </properties>
   </object>
+  <object name="Keycard" type="keycard" x="463" y="332"/>
  </objectgroup>
 </map>

@@ -124,6 +124,12 @@ package game
 						}
 						FP.world.add(new Lift(xPos, yPos, targetX, targetY, targetLayer, 8 - i * 3, player));
 					}
+					else if (xmlData.@type == "keycard") {
+						xPos = Math.floor(xmlData.@x / 32) * 32;
+						yPos = Math.floor(xmlData.@y / 32) * 32;
+						targetLayer = 9 - i * 3;
+						FP.world.add(new KeyCard(xPos, yPos, targetLayer));
+					}
 				}
 				i++;
 			}

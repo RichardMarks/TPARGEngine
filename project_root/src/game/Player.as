@@ -138,6 +138,13 @@ package game
 			}
 			(FP.world as GameWorld).setCamera(tx, ty);
 			if (!isMoving) {
+				if (myKeyCards < 1) {
+					var tempEnt:Entity = collide("keycard", x, y);
+					if (tempEnt && tempEnt.layer == layer) {
+						world.recycle(tempEnt);
+						myKeyCards = 1;
+					}
+				}
 				if (Input.pressed("climb"))
 				{
 					entities.length = 0;
