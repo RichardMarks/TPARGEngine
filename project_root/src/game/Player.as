@@ -141,6 +141,7 @@ package game
 				if (myKeyCards < 1) {
 					var tempEnt:Entity = collide("keycard", x, y);
 					if (tempEnt && tempEnt.layer == layer) {
+						KeyCard.FOUND = true;
 						world.recycle(tempEnt);
 						myKeyCards = 1;
 					}

@@ -9,6 +9,7 @@ package game
 	 */
 	public class KeyCard extends Entity
 	{
+		static public var FOUND:Boolean;
 		
 		public function KeyCard(xPos:int, yPos:int, lyr:int) 
 		{
