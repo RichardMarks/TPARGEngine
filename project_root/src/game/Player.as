@@ -95,6 +95,7 @@ package game
 			Input.define("climb", Key.C);
 			Input.define("climb up", Key.W, Key.UP);
 			Input.define("climb down", Key.S, Key.DOWN);
+			Input.define("action", Key.ENTER);
 			Input.define("kill", Key.K); // temporary kill button to test death animations
 			
 			Lift.targetPlayer = this;
@@ -111,7 +112,7 @@ package game
 		}
 		
 		private var isMoving:Boolean = false;
-		private const SPEED:Number = 64;
+		private const SPEED:Number = 256;
 		private var isJumping:Boolean = false;
 		private var isClimbing:Boolean = false;
 		private var timeForMove:Number = .1;
@@ -218,7 +219,6 @@ package game
 											var term:Terminal = collide("terminal", x, y - FRAME_HEIGHT) as Terminal;
 											if (term && term.layer == layer) {
 												move = false;
-												myKeyCards = Math.max(myKeyCards, term.maxAccess);
 											}
 											if (move) {
 												mySpritemap.play("north walk", false);
@@ -273,7 +273,6 @@ package game
 											term = collide("terminal", x, y + FRAME_HEIGHT) as Terminal;
 											if (term && term.layer == layer) {
 												move = false;
-												myKeyCards = Math.max(myKeyCards, term.maxAccess);
 											}
 											if (move) {
 												mySpritemap.play("south walk", false);
@@ -318,7 +317,6 @@ package game
 											term = collide("terminal", x + FRAME_WIDTH, y) as Terminal;
 											if (term && term.layer == layer) {
 												move = false;
-												myKeyCards = Math.max(myKeyCards, term.maxAccess);
 											}
 											if (move) {
 												mySpritemap.play("east walk", false);
@@ -363,7 +361,6 @@ package game
 											term = collide("terminal", x - FRAME_WIDTH, y) as Terminal;
 											if (term && term.layer == layer) {
 												move = false;
-												myKeyCards = Math.max(myKeyCards, term.maxAccess);
 											}
 											if (move) {
 												mySpritemap.play("west walk", false);
@@ -380,6 +377,27 @@ package game
 							myLastDirection = "west";
 							mySpritemap.play("west idle");
 							timeSinceMove = 0;
+						}
+					}
+					else if (Input.pressed("action"))
+					{
+						tx = x;
+						ty = y;
+						if (myLastDirection == "north") {
+							ty -= FRAME_HEIGHT;
+						}
+						else if (myLastDirection == "south") {
+							ty += FRAME_HEIGHT;
+						}
+						else if (myLastDirection == "east") {
+							tx += FRAME_WIDTH;
+						}
+						else {
+							tx -= FRAME_WIDTH;
+						}
+						term = collide("terminal", tx, ty) as Terminal;
+						if (term && term.layer == layer) {
+							myKeyCards = Math.max(myKeyCards, term.maxAccess);
 						}
 					}
 					else if (Input.pressed("jump"))
