@@ -26,8 +26,8 @@ package game
 		
 		public function lift(player:Player):void
 		{
-			player.x = targetX;
-			player.y = targetY;
+			player.x = targetX - 32;
+			player.y = targetY - 32;
 			player.layer = targetLayer;
 		}
 		

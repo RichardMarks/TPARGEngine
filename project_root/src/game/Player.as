@@ -131,8 +131,9 @@ package game
 				if (lift && lift.layer == layer + 1)
 				{
 					lift.lift(this);
-					targetX = x;
-					targetY = y;
+					targetX = x + 32;
+					targetY = y + 32;
+					isMoving = true;
 					targetLayer = layer;
 					return;
 				}
