@@ -22,6 +22,7 @@ package game
 			direction = dir;
 			type = "bullet";
 			graphic = new Image(SPRITE);
+			setHitbox(8, 8);
 		}
 		
 		static private var SPEED:int = 256;
@@ -39,6 +40,21 @@ package game
 			}
 			else if (direction == "west") {
 				x -= SPEED * FP.elapsed;
+			}
+			
+			if (collide("wall", x, y)) {
+				var save:Boolean = false;
+				var arr:Array = new Array;
+				collideInto("floor", x, y + ((9 - layer) / 3 + .25) * 64, arr);
+				for each (var ent:Entity in arr) {
+					if (ent.layer == 10 && !collide("lift", x, y + ((9 - layer) / 3 + .25) * 64) && !collide("teleport", x, y + ((9 - layer) / 3 + .25) * 64)) {
+						save = true;
+					}
+				}
+				if (!save) {
+					world.recycle(this);
+					return;
+				}
 			}
 		}
 		

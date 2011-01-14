@@ -4,6 +4,7 @@ package game
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Tilemap;
+	import net.flashpunk.masks.Grid;
 	/**
 	 * ...
 	 * @author Thomas King
@@ -17,6 +18,7 @@ package game
 		private var myCurrentFloor:int;
 		
 		private var myWallMap:Tilemap;
+		private var myWallMask:Grid;
 		
 		public function Map() 
 		{
@@ -41,6 +43,9 @@ package game
 			var height:int = rows * tileHeight;
 			
 			map.myWallMap = new Tilemap(TILESET, width, height, tileWidth, tileHeight);
+			map.myWallMask = new Grid(width, height, tileWidth, tileHeight);
+			
+			map.mask = map.myWallMask;
 			
 			var i:int;
 			var xmlData:XML;
@@ -50,6 +55,7 @@ package game
 				if (tileID >= 0)
 				{
 					map.myWallMap.setTile(i % columns, Math.floor(i / columns), tileID);
+					map.myWallMask.setCell(i % columns, Math.floor(i / columns), true);
 				}
 				i++;
 			}
@@ -161,6 +167,8 @@ package game
 			
 			map.graphic = map.myWallMap;
 			map.layer = 11;
+			
+			map.type = "wall";
 			
 			return map;
 		}

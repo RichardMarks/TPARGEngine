@@ -53,44 +53,44 @@ package game
 			
 			// set the animations on the sprite sheet
 			mySpritemap.add("north idle", [0]);
-			mySpritemap.add("north walk", [1, 0, 2, 0], 10, true);
+			mySpritemap.add("north walk", [1, 2], 8, true);
 			mySpritemap.add("north jump", [6]);
 			mySpritemap.add("north land", [7, 0], 5, false);
 			mySpritemap.add("north climb idle", [8]);
-			mySpritemap.add("north climb", [9, 8], 7, true);
+			mySpritemap.add("north climb", [9, 8], 8, true);
 			mySpritemap.add("north death", [10, 11], 5, false);
 			mySpritemap.add("north idle gun", [3]);
-			mySpritemap.add("north walk gun", [4, 3, 5, 3], 10, true);
+			mySpritemap.add("north walk gun", [4, 5], 8, true);
 			
 			mySpritemap.add("south idle", [0]);
-			mySpritemap.add("south walk", [1, 0, 2, 0], 10, true);
+			mySpritemap.add("south walk", [1, 2], 8, true);
 			mySpritemap.add("south jump", [6]);
 			mySpritemap.add("south land", [7, 0], 5, false);
 			mySpritemap.add("south climb idle", [8]);
-			mySpritemap.add("south climb", [9, 8], 7, true);
+			mySpritemap.add("south climb", [9, 8], 8, true);
 			mySpritemap.add("south death", [10, 11], 5, false);
 			mySpritemap.add("south idle gun", [3]);
-			mySpritemap.add("south walk gun", [4, 3, 5, 3], 10, true);
+			mySpritemap.add("south walk gun", [4, 5], 8, true);
 			
 			mySpritemap.add("east idle", [24]);
-			mySpritemap.add("east walk", [25, 24, 26, 24], 10, true);
+			mySpritemap.add("east walk", [25, 26], 10, true);
 			mySpritemap.add("east jump", [30]);
 			mySpritemap.add("east land", [31, 24], 5, false);
 			mySpritemap.add("east climb idle", [32]);
-			mySpritemap.add("east climb", [33, 32], 7, true);
+			mySpritemap.add("east climb", [33, 32], 8, true);
 			mySpritemap.add("east death", [34, 35], 5, false);
 			mySpritemap.add("east idle gun", [27]);
-			mySpritemap.add("east walk gun", [28, 27, 29, 27], 10, true);
+			mySpritemap.add("east walk gun", [28, 29], 8, true);
 			
 			mySpritemap.add("west idle", [36]);
-			mySpritemap.add("west walk", [37, 36, 38, 36], 10, true);
+			mySpritemap.add("west walk", [37, 38], 8, true);
 			mySpritemap.add("west jump", [42]);
 			mySpritemap.add("west land", [43, 36], 5, false);
 			mySpritemap.add("west climb idle", [44]);
-			mySpritemap.add("west climb", [45, 44], 7, true);
+			mySpritemap.add("west climb", [45, 44], 8, true);
 			mySpritemap.add("west death", [46, 47], 5, false);
 			mySpritemap.add("west idle gun", [39]);
-			mySpritemap.add("west walk gun", [40, 39, 41, 39], 10, true);
+			mySpritemap.add("west walk gun", [40, 41], 8, true);
 			
 			// set default animation to north/south idle
 			mySpritemap.play("south idle");
@@ -122,7 +122,7 @@ package game
 		}
 		
 		private var isMoving:Boolean = false;
-		private const SPEED:Number = 64;
+		private const SPEED:Number = 128;
 		private var isJumping:Boolean = false;
 		private var isClimbing:Boolean = false;
 		private var timeForMove:Number = .1;

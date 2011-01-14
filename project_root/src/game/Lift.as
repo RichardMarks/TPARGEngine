@@ -28,8 +28,8 @@ package game
 		{
 			animationMap = new Spritemap(SPRITE_SHEET, 32, 32);
 			animationMap.add("idle", [0]);
-			animationMap.add("open", [0, 1, 2, 3, 4], 20, false);
-			animationMap.add("close", [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 20, false);
+			animationMap.add("open", [0, 1, 2, 3, 4], 40, false);
+			animationMap.add("close", [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 40, false);
 			animationMap.play("idle");
 			graphic = animationMap;
 			x = xPos;
