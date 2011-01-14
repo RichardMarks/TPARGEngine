@@ -21,6 +21,7 @@ package game
 		private var isOpen:Boolean = true;
 		private var wasOpened:Boolean = false;
 		private var isVisible:Boolean = false;
+		public var accessLevel:int;
 		static public var targetPlayer:Player;
 		
 		private var animationMap:Spritemap;

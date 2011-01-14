@@ -21,6 +21,8 @@ package game
 		
 		private var myLastDirection:String = "south";
 		
+		public var myKeyCards:int = 0;
+		
 		public var hasGun:Boolean;
 		
 		public function Player(xPos:int, yPos:int, startLayer:int) 
@@ -198,6 +200,7 @@ package game
 											var tele:Teleport = collide("teleport", x, y - 32) as Teleport;
 											if (tele && tele.layer == layer - 1)
 											{
+												
 												tele.open();
 											}
 											mySpritemap.play("north walk", false);

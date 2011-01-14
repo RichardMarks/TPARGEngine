@@ -16,7 +16,7 @@ package game
 		private var myFloors:Vector.<Floor>;
 		private var myCurrentFloor:int;
 		
-		private var myWallMap:Tilemap
+		private var myWallMap:Tilemap;
 		
 		public function Map() 
 		{
@@ -68,7 +68,7 @@ package game
 			FP.world.add(Ladders.load(xml, 2, TILESET));
 			
 			if (playerX > 0) {
-				var player:Player = new Player(playerX, playerY, playerLayer);
+				var player:Player = Teleport.targetPlayer;
 				FP.world.add(player);
 			}
 			i = 0;
