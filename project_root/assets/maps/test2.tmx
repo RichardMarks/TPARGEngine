@@ -2586,7 +2586,7 @@
   <object name="Start" type="player_start" x="217" y="395"/>
   <object name="Warp" type="map_change" x="205" y="110">
    <properties>
-    <property name="accessLevel" value="1"/>
+    <property name="accessLevel" value="2"/>
     <property name="destinationFloor" value="2"/>
     <property name="destinationMap" value="test1"/>
     <property name="destinationX" value="12"/>

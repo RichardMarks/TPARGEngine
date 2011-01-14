@@ -215,6 +215,11 @@ package game
 													move = false;
 												}
 											}
+											var term:Terminal = collide("terminal", x, y - FRAME_HEIGHT) as Terminal;
+											if (term && term.layer == layer) {
+												move = false;
+												myKeyCards = Math.max(myKeyCards, term.maxAccess);
+											}
 											if (move) {
 												mySpritemap.play("north walk", false);
 												targetY -= FRAME_HEIGHT;
@@ -265,9 +270,16 @@ package game
 										}
 										if (move)
 										{
-											mySpritemap.play("south walk", false);
-											targetY += FRAME_HEIGHT;
-											isMoving = true;
+											term = collide("terminal", x, y + FRAME_HEIGHT) as Terminal;
+											if (term && term.layer == layer) {
+												move = false;
+												myKeyCards = Math.max(myKeyCards, term.maxAccess);
+											}
+											if (move) {
+												mySpritemap.play("south walk", false);
+												targetY += FRAME_HEIGHT;
+												isMoving = true;
+											}
 										}
 									}
 								}
@@ -303,9 +315,16 @@ package game
 											}
 										}
 										if (move) {
-											mySpritemap.play("east walk", false);
-											targetX += FRAME_WIDTH;
-											isMoving = true;
+											term = collide("terminal", x + FRAME_WIDTH, y) as Terminal;
+											if (term && term.layer == layer) {
+												move = false;
+												myKeyCards = Math.max(myKeyCards, term.maxAccess);
+											}
+											if (move) {
+												mySpritemap.play("east walk", false);
+												targetX += FRAME_WIDTH;
+												isMoving = true;
+											}
 										}
 									}
 								}
@@ -341,9 +360,16 @@ package game
 											}
 										}
 										if (move) {
-											mySpritemap.play("west walk", false);
-											targetX -= FRAME_WIDTH;
-											isMoving = true;
+											term = collide("terminal", x - FRAME_WIDTH, y) as Terminal;
+											if (term && term.layer == layer) {
+												move = false;
+												myKeyCards = Math.max(myKeyCards, term.maxAccess);
+											}
+											if (move) {
+												mySpritemap.play("west walk", false);
+												targetX -= FRAME_WIDTH;
+												isMoving = true;
+											}
 										}
 									}
 								}

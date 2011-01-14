@@ -130,6 +130,17 @@ package game
 						targetLayer = 9 - i * 3;
 						FP.world.add(new KeyCard(xPos, yPos, targetLayer));
 					}
+					else if (xmlData.@type == "terminal") {
+						xPos = Math.floor(xmlData.@x / 32) * 32;
+						yPos = Math.floor(xmlData.@y / 32) * 32;
+						for each (property in xmlData.properties.property) {
+							if (property.@name == "maxAccess") {
+								targetX = property.@value;
+							}
+						}
+						targetLayer = 9 - i * 3;
+						FP.world.add(new Terminal(xPos, yPos, targetLayer, targetX));
+					}
 				}
 				i++;
 			}
