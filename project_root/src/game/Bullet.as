@@ -2,21 +2,26 @@ package game
 {
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
+	import net.flashpunk.graphics.Image;
 	/**
 	 * ...
 	 * @author Thomas King
 	 */
 	public class Bullet extends Entity
 	{
+		[Embed(source = '../../assets/sprites/bullet_sprite.png')]
+		static private const SPRITE:Class;
+		
 		private var direction:String;
 		
 		public function Bullet(xPos:int, yPos:int, lyr:int, dir:String) 
 		{
-			x = xPos;
-			y = yPos;
+			x = xPos + 12;
+			y = yPos + 12;
 			layer = lyr;
 			direction = dir;
 			type = "bullet";
+			graphic = new Image(SPRITE);
 		}
 		
 		static private var SPEED:int = 256;

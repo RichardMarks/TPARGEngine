@@ -148,6 +148,9 @@ package game
 				ty = y - 204;
 			}
 			(FP.world as GameWorld).setCamera(tx, ty);
+			if (hasGun && Input.pressed("fire")) {
+				world.add(new Bullet(x, y, layer, myLastDirection));
+			}
 			if (!isMoving) {
 				if (myKeyCards < 1) {
 					var tempEnt:Entity = collide("keycard", x, y);
@@ -170,9 +173,6 @@ package game
 						hasGun = false;
 						mySpritemap.play(myLastDirection + " idle");
 					}
-				}
-				else if (Input.pressed("fire")) {
-					world.add(new Bullet(x, y, layer, myLastDirection));
 				}
 				else if (Input.pressed("climb"))
 				{
