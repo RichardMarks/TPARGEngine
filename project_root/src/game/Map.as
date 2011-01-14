@@ -70,19 +70,52 @@ package game
 			if (playerX > 0) {
 				FP.world.add(new Player(playerX, playerY, playerLayer));
 			}
-			else {
-				i = 0;
-				var xmlList:XML;
-				for each (xmlList in xml.objectgroup) {
-					for each (xmlData in xmlList.object) {
-						if (xmlData.@type == "player_start") {
-							var xPos:int = Math.floor(xmlData.@x / 32) * 32;
-							var yPos:int = Math.floor(xmlData.@y / 32) * 32;
-							FP.world.add(new Player(xPos, yPos, 9 - i * 2));
+			i = 0;
+			var xmlList:XML;
+			for each (xmlList in xml.objectgroup) {
+				for each (xmlData in xmlList.object) {
+					if (xmlData.@type == "player_start" && playerX < 0) {
+						var xPos:int = Math.floor(xmlData.@x / 32) * 32;
+						var yPos:int = Math.floor(xmlData.@y / 32) * 32;
+						FP.world.add(new Player(xPos, yPos, 9 - i * 2));
+					}
+					else if (xmlData.@type == "map_change") {
+						xPos = Math.floor(xmlData.@x / 32) * 32;
+						yPos = Math.floor(xmlData.@y / 32) * 32;
+						for each (var property:XML in xmlData.properties.property) {
+							if (property.@name == "destinationX") {
+								var targetX:int = property.@value * 32;
+							}
+							else if (property.@name == "destinationY") {
+								var targetY:int = property.@value * 32;
+							}
+							else if (property.@name == "destinationMap") {
+								var targetMap:String = property.@value;
+							}
+							else if (property.@name == "destinationFloor") {
+								var targetLayer:int = 9 - (property.@value - 1) * 2;
+							}
 						}
-						i++;
+						FP.world.add(new Teleport(xPos, yPos, targetMap, targetX, targetY, targetLayer, 10 - i * 2));
+					}
+					else if (xmlData.@type == "floor_change") {
+						xPos = Math.floor(xmlData.@x / 32) * 32;
+						yPos = Math.floor(xmlData.@y / 32) * 32;
+						for each (property in xmlData.properties.property) {
+							if (property.@name == "destinationX") {
+								targetX = property.@value * 32;
+							}
+							else if (property.@name == "destinationY") {
+								targetY = property.@value * 32;
+							}
+							else if (property.@name == "destinationFloor") {
+								targetLayer = 9 - (property.@value - 1) * 2;
+							}
+						}
+						FP.world.add(new Lift(xPos, yPos, targetX, targetY, targetLayer, 10 - i * 2));
 					}
 				}
+				i++;
 			}
 			
 			map.graphic = map.myWallMap;

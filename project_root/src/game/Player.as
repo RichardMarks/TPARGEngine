@@ -41,11 +41,12 @@ package game
 			// set position to somewhere towards the middle of the screen
 			targetX = x;
 			targetY = y;
+			targetLayer = layer;
 			
 			mySpritemap = new Spritemap(PLAYER_SPRITE_SHEET, FRAME_WIDTH, FRAME_HEIGHT);
 			
 			graphic = mySpritemap;
-			layer = 9;
+			type = "player";
 			setHitbox(FRAME_WIDTH, FRAME_HEIGHT);
 			
 			// set the animations on the sprite sheet
@@ -96,7 +97,7 @@ package game
 		}
 		
 		private var isMoving:Boolean = false;
-		private const SPEED:Number = 64;
+		private const SPEED:Number = 256;
 		private var isJumping:Boolean = false;
 		private var isClimbing:Boolean = false;
 		private var timeForMove:Number = .1;
@@ -120,6 +121,21 @@ package game
 				FP.camera.y = y - 204;
 			}
 			if (!isMoving) {
+				var tele:Teleport = collide("teleport", x, y) as Teleport;
+				if (tele && tele.layer == layer + 1)
+				{
+					tele.teleport();
+					return;
+				}
+				var lift:Lift = collide("lift", x, y) as Lift;
+				if (lift && lift.layer == layer + 1)
+				{
+					lift.lift(this);
+					targetX = x;
+					targetY = y;
+					targetLayer = layer;
+					return;
+				}
 				if (Input.pressed("climb"))
 				{
 					entities.length = 0;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="32" height="20" tilewidth="32" tileheight="32">
-<properties>
+ <properties>
   <property name="mapName" value="test2"/>
  </properties>
  <tileset firstgid="1" name="basic_tiles" tilewidth="32" tileheight="32">
@@ -2586,6 +2586,7 @@
   <object name="Start" type="player_start" x="217" y="395"/>
   <object name="Warp" type="map_change" x="205" y="110">
    <properties>
+    <property name="destinationFloor" value="2"/>
     <property name="destinationMap" value="test1"/>
     <property name="destinationX" value="12"/>
     <property name="destinationY" value="6"/>

@@ -8,8 +8,10 @@ package game
 	 */
 	public class GameWorld extends World 
 	{
-		[Embed(source = '../../assets/maps/r1.tmx', mimeType = 'application/octet-stream')]
+		[Embed(source = '../../assets/maps/test1.tmx', mimeType = 'application/octet-stream')]
 		private static const TEST_MAP:Class;
+		[Embed(source = '../../assets/maps/test2.tmx', mimeType = 'application/octet-stream')]
+		private static const TEST_MAP2:Class;
 		
 		public function GameWorld() { }
 		override public function begin():void 
@@ -18,7 +20,7 @@ package game
 			add(Map.loadMap(TEST_MAP));
 		}
 		
-		public function goto(map:String, playerX:int, playerY:int, playerLayer:int)
+		public function goto(map:String, playerX:int, playerY:int, playerLayer:int):void
 		{
 			removeAll();
 			if (map == "test1") {
