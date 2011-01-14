@@ -4526,7 +4526,13 @@
    <tile gid="0"/>
   </data>
  </layer>
- <objectgroup name="objects-f2" width="32" height="20"/>
+ <objectgroup name="objects-f2" width="32" height="20">
+  <object name="Term" type="terminal" x="784" y="271">
+   <properties>
+    <property name="maxAccess" value="2"/>
+   </properties>
+  </object>
+ </objectgroup>
  <layer name="floor-f3" width="32" height="20">
   <data>
    <tile gid="0"/>
