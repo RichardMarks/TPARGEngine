@@ -18,17 +18,20 @@ package game
 		private var targetY:int;
 		private var targetLayer:int;
 		private var isOpen:Boolean = true;
+		private var wasOpened:Boolean = false;
 		private var isVisible:Boolean = false;
+		static public var targetPlayer:Player;
 		
-		static private var ANIMATION_MAP:Spritemap;
+		private var animationMap:Spritemap;
 		
-		public function Lift(xPos:int, yPos:int, destinationX:int, destinationY:int, destinationLayer:int, lyr:int) 
+		public function Lift(xPos:int, yPos:int, destinationX:int, destinationY:int, destinationLayer:int, lyr:int, player:Player) 
 		{
-			if (!ANIMATION_MAP) {
-				ANIMATION_MAP = new Spritemap(SPRITE_SHEET, 32, 32);
-				ANIMATION_MAP.add("open", [0, 1, 2, 3, 4], 10, false);
-				ANIMATION_MAP.add("close", [4, 3, 2, 1, 0], 10, false);
-			}
+			animationMap = new Spritemap(SPRITE_SHEET, 32, 32);
+			animationMap.add("idle", [0]);
+			animationMap.add("open", [0, 1, 2, 3, 4], 20, false);
+			animationMap.add("close", [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 20, false);
+			animationMap.play("idle");
+			graphic = animationMap;
 			x = xPos;
 			y = yPos;
 			setHitbox(32, 32);
@@ -39,33 +42,35 @@ package game
 			type = "lift";
 		}
 		
-		public function lift(player:Player):void
+		public function open(isPlayer:Boolean = true):void
 		{
-			player.x = targetX;
-			player.y = targetY - 32;
-			player.layer = targetLayer;
-		}
-		
-		public function open():void
-		{
+			wasOpened = isPlayer
 			isOpen = true;
 			isVisible = true;
-			ANIMATION_MAP.play("open");
+			animationMap.play("open");
 		}
 		
-		override public function render():void 
+		override public function update():void 
 		{
-			super.render();
-			if (isVisible) {
-				ANIMATION_MAP.update();
-				ANIMATION_MAP.render(new Point(x, y), FP.camera);
-				if (ANIMATION_MAP.complete) {
-					if (isOpen) {
-						isOpen = false;
-						ANIMATION_MAP.play("close");
+			super.update();
+			if (animationMap.complete && animationMap.currentAnim != "idle") {
+				if (isOpen) {
+					if (!wasOpened) {
+						targetPlayer.moveTo(x, y + 32);
 					}
-					else {
-						isVisible = false;
+					isOpen = false;
+					animationMap.play("close");
+				}
+				else {
+					if (wasOpened) {
+						animationMap.play("idle");
+						targetPlayer.x = targetX;
+						targetPlayer.y = targetY - 32;
+						targetPlayer.layer = targetLayer;
+						targetPlayer.moveTo(targetX, targetY - 32);
+						var lift:Lift = collide("lift", targetX, targetY - 32) as Lift;
+						lift.open(false);
+						wasOpened = false;
 					}
 				}
 			}

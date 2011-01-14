@@ -70,7 +70,7 @@ package game
 			if (playerX > 0) {
 				var player:Player = new Player(playerX, playerY, playerLayer);
 				FP.world.add(player);
-				player.moveBy(0, 1);
+				//player.moveTo(0, 1);
 			}
 			i = 0;
 			var xmlList:XML;
@@ -79,7 +79,7 @@ package game
 					if (xmlData.@type == "player_start" && playerX < 0) {
 						var xPos:int = Math.floor(xmlData.@x / 32) * 32;
 						var yPos:int = Math.floor(xmlData.@y / 32) * 32;
-						player = new Player(xPos, yPos, 9 - i * 2);
+						player = new Player(xPos, yPos, 9 - i * 3);
 						FP.world.add(player);
 					}
 					else if (xmlData.@type == "map_change") {
@@ -96,10 +96,10 @@ package game
 								var targetMap:String = property.@value;
 							}
 							else if (property.@name == "destinationFloor") {
-								var targetLayer:int = 9 - (property.@value - 1) * 2;
+								var targetLayer:int = 9 - (property.@value - 1) * 3;
 							}
 						}
-						FP.world.add(new Teleport(xPos, yPos, targetMap, targetX, targetY, targetLayer, 10 - i * 2));
+						FP.world.add(new Teleport(xPos, yPos, targetMap, targetX, targetY, targetLayer, 8 - i * 3));
 					}
 					else if (xmlData.@type == "floor_change") {
 						xPos = Math.floor(xmlData.@x / 32) * 32;
@@ -112,10 +112,10 @@ package game
 								targetY = property.@value * 32;
 							}
 							else if (property.@name == "destinationFloor") {
-								targetLayer = 9 - (property.@value - 1) * 2;
+								targetLayer = 9 - (property.@value - 1) * 3;
 							}
 						}
-						FP.world.add(new Lift(xPos, yPos, targetX, targetY, targetLayer, 10 - i * 2));
+						FP.world.add(new Lift(xPos, yPos, targetX, targetY, targetLayer, 8 - i * 3, player));
 					}
 				}
 				i++;

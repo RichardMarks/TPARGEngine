@@ -45,7 +45,7 @@ package game
 			}
 			
 			level.graphic = level.myLadderMap;
-			level.layer = 10 - floor * 2;
+			level.layer = 10 - floor * 3;
 			level.type = "ladder";
 			level.mask = level.myGridMask;
 			

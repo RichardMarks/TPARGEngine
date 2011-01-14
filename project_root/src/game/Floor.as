@@ -61,7 +61,7 @@ package game
 			
 			var graphic:Graphiclist = new Graphiclist(level.myFloorMap, level.myFringeMap);
 			level.graphic = graphic;
-			level.layer = 10 - floor * 2;
+			level.layer = 10 - floor * 3;
 			level.type = "floor";
 			level.mask = level.myGridMask;
 			

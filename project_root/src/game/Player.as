@@ -94,14 +94,17 @@ package game
 			Input.define("climb up", Key.W, Key.UP);
 			Input.define("climb down", Key.S, Key.DOWN);
 			Input.define("kill", Key.K); // temporary kill button to test death animations
+			
+			Lift.targetPlayer = this;
 		}
 		
-		public function moveBy(dx:int, dy:int):void
+		public function moveTo(x:int, y:int):void
 		{
-			targetX += dx * 32;
-			targetY += dy * 32;
+			targetX = x;
+			targetY = y;
 			isMoving = true;
 			myLastDirection = "south";
+			mySpritemap.play(myLastDirection + " walk");
 		}
 		
 		private var isMoving:Boolean = false;
@@ -130,20 +133,9 @@ package game
 			}
 			if (!isMoving) {
 				var tele:Teleport = collide("teleport", x, y) as Teleport;
-				if (tele && tele.layer == layer + 1)
+				if (tele && tele.layer == layer)
 				{
 					tele.teleport();
-					return;
-				}
-				var lift:Lift = collide("lift", x, y) as Lift;
-				if (lift && lift.layer == layer + 1)
-				{
-					lift.lift(this);
-					targetX = x;
-					targetY = y + 32;
-					isMoving = true;
-					targetLayer = layer;
-					mySpritemap.play("south walk", false);
 					return;
 				}
 				if (Input.pressed("climb"))
@@ -191,7 +183,7 @@ package game
 												collideInto("ladder", x, y - FRAME_HEIGHT, entities);
 												for each (ent in entities)
 												{
-													if (ent.layer == layer - 1)
+													if (ent.layer == layer - 2)
 													{
 														move = false;
 													}
@@ -200,8 +192,8 @@ package game
 										}
 										if (move)
 										{
-											lift = collide("lift", x, y - 32) as Lift;
-											if (lift && lift.layer == layer + 1)
+											var lift:Lift = collide("lift", x, y - 32) as Lift;
+											if (lift && lift.layer == layer - 1)
 											{
 												lift.open();
 											}
@@ -421,12 +413,12 @@ package game
 						collideInto("ladder", x, y - FRAME_HEIGHT, entities);
 						for each (ent in entities)
 						{
-							if (ent.layer == layer - 1)
+							if (ent.layer == layer - 2)
 							{
 								mySpritemap.play(myLastDirection + " climb");
 								targetY -= FRAME_HEIGHT * 2;
 								isMoving = true;
-								layer -= 2;
+								layer -= 3;
 								targetLayer = layer;
 							}
 						}
@@ -437,12 +429,12 @@ package game
 						collideInto("ladder", x, y + FRAME_HEIGHT * 2, entities);
 						for each (ent in entities)
 						{
-							if (ent.layer == layer + 3)
+							if (ent.layer == layer + 4)
 							{
 								mySpritemap.play(myLastDirection + " climb");
 								targetY += FRAME_HEIGHT * 2;
 								isMoving = true;
-								targetLayer = layer + 2;
+								targetLayer = layer + 3;
 							}
 						}
 					}
