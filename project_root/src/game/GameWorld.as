@@ -17,5 +17,16 @@ package game
 			super.begin();
 			add(Map.loadMap(TEST_MAP));
 		}
+		
+		public function goto(map:String, playerX:int, playerY:int, playerLayer:int)
+		{
+			removeAll();
+			if (map == "test1") {
+				add(Map.loadMap(TEST_MAP, playerX, playerY, playerLayer));
+			}
+			else if (map == "test2") {
+				add(Map.loadMap(TEST_MAP2, playerX, playerY, playerLayer));
+			}
+		}
 	}
 }

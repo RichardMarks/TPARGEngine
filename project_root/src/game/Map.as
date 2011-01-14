@@ -23,7 +23,7 @@ package game
 			myFloors = new Vector.<Floor>();
 		}
 		
-		static public function loadMap(data:Class):Map
+		static public function loadMap(data:Class, playerX:int = -1, playerY:int = -1, playerLayer:int = -1):Map
 		{
 			var map:Map = new Map;
 			
@@ -67,16 +67,21 @@ package game
 			FP.world.add(Ladders.load(xml, 1, TILESET));
 			FP.world.add(Ladders.load(xml, 2, TILESET));
 			
-			i = 0;
-			var xmlList:XML;
-			for each (xmlList in xml.objectgroup) {
-				for each (xmlData in xmlList.object) {
-					if (xmlData.@type == "player_start") {
-						var xPos:int = Math.floor(xmlData.@x / 32) * 32;
-						var yPos:int = Math.floor(xmlData.@y / 32) * 32;
-						FP.world.add(new Player(xPos, yPos, 9 - i * 2));
+			if (playerX > 0) {
+				FP.world.add(new Player(playerX, playerY, playerLayer));
+			}
+			else {
+				i = 0;
+				var xmlList:XML;
+				for each (xmlList in xml.objectgroup) {
+					for each (xmlData in xmlList.object) {
+						if (xmlData.@type == "player_start") {
+							var xPos:int = Math.floor(xmlData.@x / 32) * 32;
+							var yPos:int = Math.floor(xmlData.@y / 32) * 32;
+							FP.world.add(new Player(xPos, yPos, 9 - i * 2));
+						}
+						i++;
 					}
-					i++;
 				}
 			}
 			
