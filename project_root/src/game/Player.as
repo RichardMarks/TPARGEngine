@@ -23,7 +23,7 @@ package game
 		
 		public var myKeyCards:int = 0;
 		
-		public var hasGun:Boolean;
+		public var hasGun:Boolean = false;
 		
 		public function Player(xPos:int, yPos:int, startLayer:int) 
 		{
@@ -59,6 +59,8 @@ package game
 			mySpritemap.add("north climb idle", [8]);
 			mySpritemap.add("north climb", [9, 8], 7, true);
 			mySpritemap.add("north death", [10, 11], 5, false);
+			mySpritemap.add("north idle gun", [3]);
+			mySpritemap.add("north walk gun", [4, 3, 5, 3], 10, true);
 			
 			mySpritemap.add("south idle", [0]);
 			mySpritemap.add("south walk", [1, 0, 2, 0], 10, true);
@@ -67,6 +69,8 @@ package game
 			mySpritemap.add("south climb idle", [8]);
 			mySpritemap.add("south climb", [9, 8], 7, true);
 			mySpritemap.add("south death", [10, 11], 5, false);
+			mySpritemap.add("south idle gun", [3]);
+			mySpritemap.add("south walk gun", [4, 3, 5, 3], 10, true);
 			
 			mySpritemap.add("east idle", [24]);
 			mySpritemap.add("east walk", [25, 24, 26, 24], 10, true);
@@ -75,6 +79,8 @@ package game
 			mySpritemap.add("east climb idle", [32]);
 			mySpritemap.add("east climb", [33, 32], 7, true);
 			mySpritemap.add("east death", [34, 35], 5, false);
+			mySpritemap.add("east idle gun", [27]);
+			mySpritemap.add("east walk gun", [28, 27, 29, 27], 10, true);
 			
 			mySpritemap.add("west idle", [36]);
 			mySpritemap.add("west walk", [37, 36, 38, 36], 10, true);
@@ -83,6 +89,8 @@ package game
 			mySpritemap.add("west climb idle", [44]);
 			mySpritemap.add("west climb", [45, 44], 7, true);
 			mySpritemap.add("west death", [46, 47], 5, false);
+			mySpritemap.add("west idle gun", [39]);
+			mySpritemap.add("west walk gun", [40, 39, 41, 39], 10, true);
 			
 			// set default animation to north/south idle
 			mySpritemap.play("south idle");
@@ -96,6 +104,8 @@ package game
 			Input.define("climb up", Key.W, Key.UP);
 			Input.define("climb down", Key.S, Key.DOWN);
 			Input.define("action", Key.ENTER);
+			Input.define("fire", Key.X);
+			Input.define("arm", Key.J); // temporary arm/disarm button
 			Input.define("kill", Key.K); // temporary kill button to test death animations
 			
 			Lift.targetPlayer = this;
@@ -108,11 +118,11 @@ package game
 			targetY = y;
 			isMoving = true;
 			myLastDirection = "south";
-			mySpritemap.play(myLastDirection + " walk");
+			mySpritemap.play(myLastDirection + " walk" + (hasGun ? " gun" : ""));
 		}
 		
 		private var isMoving:Boolean = false;
-		private const SPEED:Number = 256;
+		private const SPEED:Number = 64;
 		private var isJumping:Boolean = false;
 		private var isClimbing:Boolean = false;
 		private var timeForMove:Number = .1;
@@ -151,7 +161,20 @@ package game
 				if (tempEnt && tempEnt.layer == layer) {
 					(tempEnt as DataDisk).collect();
 				}
-				if (Input.pressed("climb"))
+				if (Input.pressed("arm")) {
+					if (!hasGun) {
+						hasGun = true;
+						mySpritemap.play(myLastDirection + " idle gun");
+					}
+					else {
+						hasGun = false;
+						mySpritemap.play(myLastDirection + " idle");
+					}
+				}
+				else if (Input.pressed("fire")) {
+					world.add(new Bullet(x, y, layer, myLastDirection));
+				}
+				else if (Input.pressed("climb"))
 				{
 					entities.length = 0;
 					collideInto("ladder", x, y, entities);
@@ -166,7 +189,7 @@ package game
 							}
 							else
 							{
-								mySpritemap.play(myLastDirection + " idle");
+								mySpritemap.play(myLastDirection + " idle" + (hasGun ? " gun" : ""));
 							}
 						}
 					}
@@ -225,7 +248,7 @@ package game
 												move = false;
 											}
 											if (move) {
-												mySpritemap.play("north walk", false);
+												mySpritemap.play("north walk" + (hasGun ? " gun" : ""), false);
 												targetY -= FRAME_HEIGHT;
 												isMoving = true;
 											}
@@ -237,7 +260,7 @@ package game
 						else
 						{
 							myLastDirection = "north";
-							mySpritemap.play("north idle", false);
+							mySpritemap.play("north idle" + (hasGun ? " gun" : ""), false);
 							timeSinceMove = 0;
 						}
 					}
@@ -279,7 +302,7 @@ package game
 												move = false;
 											}
 											if (move) {
-												mySpritemap.play("south walk", false);
+												mySpritemap.play("south walk" + (hasGun ? " gun" : ""), false);
 												targetY += FRAME_HEIGHT;
 												isMoving = true;
 											}
@@ -291,7 +314,7 @@ package game
 						else
 						{
 							myLastDirection = "south";
-							mySpritemap.play("south idle");
+							mySpritemap.play("south idle" + (hasGun ? " gun" : ""));
 							timeSinceMove = 0;
 						}
 					}
@@ -323,7 +346,7 @@ package game
 												move = false;
 											}
 											if (move) {
-												mySpritemap.play("east walk", false);
+												mySpritemap.play("east walk" + (hasGun ? " gun" : "", false));
 												targetX += FRAME_WIDTH;
 												isMoving = true;
 											}
@@ -335,7 +358,7 @@ package game
 						else
 						{
 							myLastDirection = "east";
-							mySpritemap.play("east idle");
+							mySpritemap.play("east idle" + (hasGun ? " gun" : ""));
 							timeSinceMove = 0;
 						}
 					}
@@ -367,7 +390,7 @@ package game
 												move = false;
 											}
 											if (move) {
-												mySpritemap.play("west walk", false);
+												mySpritemap.play("west walk" + (hasGun ? " gun" : ""), false);
 												targetX -= FRAME_WIDTH;
 												isMoving = true;
 											}
@@ -379,7 +402,7 @@ package game
 						else
 						{
 							myLastDirection = "west";
-							mySpritemap.play("west idle");
+							mySpritemap.play("west idle" + (hasGun ? " gun" : ""));
 							timeSinceMove = 0;
 						}
 					}
@@ -523,7 +546,7 @@ package game
 					}
 					x += dx;
 					if (!isJumping && !isClimbing) {
-						mySpritemap.play(myLastDirection + " walk", false);
+						mySpritemap.play(myLastDirection + " walk" + (hasGun ? " gun" : ""), false);
 					}
 				}
 				else if (targetY != y)
@@ -549,13 +572,13 @@ package game
 					}
 					else if (isClimbing)
 					{
-						mySpritemap.play(myLastDirection + " idle");
+						mySpritemap.play(myLastDirection + " idle" + (hasGun ? " gun" : ""));
 						isClimbing = false;
 						layer = targetLayer;
 					}
 					else
 					{
-						mySpritemap.play(myLastDirection + " idle");
+						mySpritemap.play(myLastDirection + " idle" + (hasGun ? " gun" : ""));
 					}
 				}
 			}
