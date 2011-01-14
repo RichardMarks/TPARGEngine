@@ -70,7 +70,6 @@ package game
 			if (playerX > 0) {
 				var player:Player = new Player(playerX, playerY, playerLayer);
 				FP.world.add(player);
-				//player.moveTo(0, 1);
 			}
 			i = 0;
 			var xmlList:XML;
@@ -99,7 +98,11 @@ package game
 								var targetLayer:int = 9 - (property.@value - 1) * 3;
 							}
 						}
-						FP.world.add(new Teleport(xPos, yPos, targetMap, targetX, targetY, targetLayer, 8 - i * 3));
+						var tele:Teleport = new Teleport(xPos, yPos, targetMap, targetX, targetY, targetLayer, 8 - i * 3, player);
+						FP.world.add(tele);
+						if (playerX > 0) {
+							tele.open(false);
+						}
 					}
 					else if (xmlData.@type == "floor_change") {
 						xPos = Math.floor(xmlData.@x / 32) * 32;

@@ -96,6 +96,7 @@ package game
 			Input.define("kill", Key.K); // temporary kill button to test death animations
 			
 			Lift.targetPlayer = this;
+			Teleport.targetPlayer = this;
 		}
 		
 		public function moveTo(x:int, y:int):void
@@ -132,12 +133,6 @@ package game
 				FP.camera.y = y - 204;
 			}
 			if (!isMoving) {
-				var tele:Teleport = collide("teleport", x, y) as Teleport;
-				if (tele && tele.layer == layer)
-				{
-					tele.teleport();
-					return;
-				}
 				if (Input.pressed("climb"))
 				{
 					entities.length = 0;
@@ -196,6 +191,11 @@ package game
 											if (lift && lift.layer == layer - 1)
 											{
 												lift.open();
+											}
+											var tele:Teleport = collide("teleport", x, y - 32) as Teleport;
+											if (tele && tele.layer == layer - 1)
+											{
+												tele.open();
 											}
 											mySpritemap.play("north walk", false);
 											targetY -= FRAME_HEIGHT;
