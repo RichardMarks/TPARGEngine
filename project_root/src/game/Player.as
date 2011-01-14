@@ -147,6 +147,10 @@ package game
 						myKeyCards = 1;
 					}
 				}
+				tempEnt = collide("disk", x, y);
+				if (tempEnt && tempEnt.layer == layer) {
+					(tempEnt as DataDisk).collect();
+				}
 				if (Input.pressed("climb"))
 				{
 					entities.length = 0;

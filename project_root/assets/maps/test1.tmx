@@ -2331,6 +2331,11 @@
     <property name="destinationY" value="4"/>
    </properties>
   </object>
+  <object name="disk4" type="disk" x="79" y="304">
+   <properties>
+    <property name="id" value="3"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer name="floor-f2" width="25" height="23">
   <data>
@@ -4077,6 +4082,11 @@
     <property name="destinationMap" value="test2"/>
     <property name="destinationX" value="6"/>
     <property name="destinationY" value="4"/>
+   </properties>
+  </object>
+  <object name="disk6" type="disk" x="724" y="524">
+   <properties>
+    <property name="id" value="5"/>
    </properties>
   </object>
  </objectgroup>
@@ -5826,5 +5836,10 @@
    </properties>
   </object>
   <object name="Keycard" type="keycard" x="463" y="332"/>
+  <object name="disk5" type="disk" x="596" y="179">
+   <properties>
+    <property name="id" value="4"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

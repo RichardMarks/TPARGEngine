@@ -2593,6 +2593,16 @@
     <property name="destinationY" value="6"/>
    </properties>
   </object>
+  <object name="disk3" type="disk" x="946" y="174">
+   <properties>
+    <property name="id" value="2"/>
+   </properties>
+  </object>
+  <object name="disk2" type="disk" x="74" y="176">
+   <properties>
+    <property name="id" value="1"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer name="floor-f2" width="32" height="20">
   <data>
@@ -4530,6 +4540,11 @@
   <object name="Term" type="terminal" x="784" y="271">
    <properties>
     <property name="maxAccess" value="2"/>
+   </properties>
+  </object>
+  <object name="disk1" type="disk" x="625" y="209">
+   <properties>
+    <property name="id" value="0"/>
    </properties>
   </object>
  </objectgroup>

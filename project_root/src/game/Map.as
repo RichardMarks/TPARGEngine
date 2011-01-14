@@ -141,6 +141,20 @@ package game
 						targetLayer = 9 - i * 3;
 						FP.world.add(new Terminal(xPos, yPos, targetLayer, targetX));
 					}
+					else if (xmlData.@type == "disk") {
+						xPos = Math.floor(xmlData.@x / 32) * 32;
+						yPos = Math.floor(xmlData.@y / 32) * 32;
+						for each (property in xmlData.properties.property) {
+							if (property.@name == "id") {
+								targetX = property.@value;
+							}
+						}
+						targetLayer = 9 - i * 3;
+						if (DataDisk.COLLECTED.charAt(targetX) == 'f') {
+							continue;
+						}
+						FP.world.add(new DataDisk(xPos, yPos, targetLayer, targetX));
+					}
 				}
 				i++;
 			}
