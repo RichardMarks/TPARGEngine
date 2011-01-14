@@ -19,7 +19,7 @@ package game
 		static private const FRAME_WIDTH:int = 32;
 		static private const FRAME_HEIGHT:int = 32;
 		
-		private var myLastDirection:String = "north";
+		private var myLastDirection:String = "south";
 		
 		public var hasGun:Boolean;
 		
@@ -83,7 +83,7 @@ package game
 			mySpritemap.add("west death", [46, 47], 5, false);
 			
 			// set default animation to north/south idle
-			mySpritemap.play("north idle");
+			mySpritemap.play("south idle");
 			
 			Input.define("walk north", Key.W, Key.UP);
 			Input.define("walk south", Key.S, Key.DOWN);
@@ -96,8 +96,16 @@ package game
 			Input.define("kill", Key.K); // temporary kill button to test death animations
 		}
 		
+		public function moveBy(dx:int, dy:int):void
+		{
+			targetX += dx * 32;
+			targetY += dy * 32;
+			isMoving = true;
+			myLastDirection = "south";
+		}
+		
 		private var isMoving:Boolean = false;
-		private const SPEED:Number = 256;
+		private const SPEED:Number = 64;
 		private var isJumping:Boolean = false;
 		private var isClimbing:Boolean = false;
 		private var timeForMove:Number = .1;
@@ -131,10 +139,11 @@ package game
 				if (lift && lift.layer == layer + 1)
 				{
 					lift.lift(this);
-					targetX = x + 32;
+					targetX = x;
 					targetY = y + 32;
 					isMoving = true;
 					targetLayer = layer;
+					mySpritemap.play("south walk", false);
 					return;
 				}
 				if (Input.pressed("climb"))
@@ -191,6 +200,11 @@ package game
 										}
 										if (move)
 										{
+											lift = collide("lift", x, y - 32) as Lift;
+											if (lift && lift.layer == layer + 1)
+											{
+												lift.open();
+											}
 											mySpritemap.play("north walk", false);
 											targetY -= FRAME_HEIGHT;
 											isMoving = true;
@@ -448,6 +462,9 @@ package game
 						dx = Math.min(SPEED * FP.elapsed, targetX - x);
 					}
 					x += dx;
+					if (!isJumping && !isClimbing) {
+						mySpritemap.play(myLastDirection + " walk", false);
+					}
 				}
 				else if (targetY != y)
 				{

@@ -68,7 +68,9 @@ package game
 			FP.world.add(Ladders.load(xml, 2, TILESET));
 			
 			if (playerX > 0) {
-				FP.world.add(new Player(playerX, playerY, playerLayer));
+				var player:Player = new Player(playerX, playerY, playerLayer);
+				FP.world.add(player);
+				player.moveBy(0, 1);
 			}
 			i = 0;
 			var xmlList:XML;
@@ -77,7 +79,8 @@ package game
 					if (xmlData.@type == "player_start" && playerX < 0) {
 						var xPos:int = Math.floor(xmlData.@x / 32) * 32;
 						var yPos:int = Math.floor(xmlData.@y / 32) * 32;
-						FP.world.add(new Player(xPos, yPos, 9 - i * 2));
+						player = new Player(xPos, yPos, 9 - i * 2);
+						FP.world.add(player);
 					}
 					else if (xmlData.@type == "map_change") {
 						xPos = Math.floor(xmlData.@x / 32) * 32;
