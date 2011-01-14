@@ -120,18 +120,21 @@ package game
 		{
 			super.update();
 			timeSinceMove += FP.elapsed;
+			var tx:int = FP.camera.x;
+			var ty:int = FP.camera.y;
 			if (x - FP.camera.x > 496) {
-				FP.camera.x = x - 496;
+				tx = x - 496
 			}
 			else if (x - FP.camera.x < 304) {
-				FP.camera.x = x - 304;
+				tx = x - 304;
 			}
 			if (y - FP.camera.y > 396) {
-				FP.camera.y = y - 396;
+				ty = y - 396;
 			}
 			else if (y - FP.camera.y < 204) {
-				FP.camera.y = y - 204;
+				ty = y - 204;
 			}
+			(FP.world as GameWorld).setCamera(tx, ty);
 			if (!isMoving) {
 				if (Input.pressed("climb"))
 				{
